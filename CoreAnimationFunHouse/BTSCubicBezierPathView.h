@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@class CAMediaTimingFunction;
-
 @interface BTSCubicBezierPathView : UIView
 
 // Call to get the current bezier path.

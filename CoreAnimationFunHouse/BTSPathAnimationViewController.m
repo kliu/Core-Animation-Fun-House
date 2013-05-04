@@ -20,6 +20,8 @@ static const CGPoint kBTSPathEndPoint = {300.0, 300.0};
 // This example shows just how easy it is to animate a layer along an arbitrary path.
 @implementation BTSPathAnimationViewController 
 
+#pragma mark - Object Life Cycle
+
 - (void)dealloc
 {
     if (_path) {
@@ -27,6 +29,8 @@ static const CGPoint kBTSPathEndPoint = {300.0, 300.0};
     }
     [[[[[self view] layer] sublayers] objectAtIndex:0] setDelegate:nil];
 }
+
+#pragma mark - View Life Cycle
 
 - (void)viewDidLoad
 {
@@ -44,11 +48,11 @@ static const CGPoint kBTSPathEndPoint = {300.0, 300.0};
     // This is the layer that animates along the path. 
     CALayer *layer = [CALayer layer];
     
-    [layer setShadowColor:[UIColor blackColor].CGColor];
-    [layer setContents:(__bridge id)[UIImage imageNamed:@"american-flag.png"].CGImage];
+    [layer setShadowColor:[[UIColor blackColor] CGColor]];
+    [layer setContents:(__bridge id)[[UIImage imageNamed:@"american-flag.png"] CGImage]];
     [layer setBounds:CGRectMake(0.0, 0.0, 75.0, 75.0)];
     [layer setPosition:CGPointMake(15.0, 15.0)];
-    [layer setShadowPath:[UIBezierPath bezierPathWithRect:[layer bounds]].CGPath];
+    [layer setShadowPath:[[UIBezierPath bezierPathWithRect:[layer bounds]] CGPath]];
     [layer setShadowOpacity:0.8];
     [layer setShadowOffset:CGSizeMake(5.0, 5.0)];
     
@@ -62,34 +66,14 @@ static const CGPoint kBTSPathEndPoint = {300.0, 300.0};
     [[[self view] layer] setNeedsDisplay];
 }
 
-- (void)viewDidUnload
-{
-    if  (_path) {
-        CFRelease(_path);
-        _path = nil;
-    }
-    
-    // Yes... I like the brackets.. I am not a fan of the "dot" syntax. :-)
-    [[[[[self view] layer] sublayers] objectAtIndex:0] setDelegate:nil];
-    
-    [super viewDidUnload];
-}
-
 #pragma mark - Path Drawing
 
 - (void)drawLayer:(CALayer *)layer inContext:(CGContextRef)ctx
 {  
     CGContextAddPath(ctx, _path);
     CGContextSetShadow(ctx, CGSizeMake(2.5, 2.5), 2.0);
-    CGContextSetStrokeColorWithColor(ctx, [UIColor blueColor].CGColor);
+    CGContextSetStrokeColorWithColor(ctx, [[UIColor blueColor] CGColor]);
     CGContextStrokePath(ctx);
-}
-
-#pragma mark - View lifecycle
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 - (IBAction)updateAnimation:(id)sender {

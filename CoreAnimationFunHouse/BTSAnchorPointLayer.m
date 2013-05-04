@@ -48,12 +48,12 @@
     CGPathAddArc(path, NULL, center.x, center.y, bounds.size.width / 2 - strokeWidth, 0.0, (CGFloat) (M_PI * 2.0), 0);
     
     CGContextAddPath(context, path);
-    CGContextSetFillColorWithColor(context, [[UIColor redColor] colorWithAlphaComponent:0.5].CGColor);
+    CGContextSetFillColorWithColor(context, [[[UIColor redColor] colorWithAlphaComponent:0.5] CGColor]);
     CGContextFillPath(context);
 
     CGContextAddPath(context, path);
     CGContextSetLineWidth(context, strokeWidth);
-    CGContextSetStrokeColorWithColor(context, [UIColor yellowColor].CGColor);
+    CGContextSetStrokeColorWithColor(context, [[UIColor yellowColor] CGColor]);
     CGContextStrokePath(context);
     
     CFRelease(path);

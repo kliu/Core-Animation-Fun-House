@@ -13,12 +13,11 @@
 
 @interface BTSBezierPathViewController() {
     
-    // store a reference so we can modify the title ("Animate", "Stop")
-    __weak IBOutlet UIBarButtonItem *animateButton;
-    
-    BOOL animating;
+    BOOL _animating;
     CALayer *_layer;
 }
+
+@property (nonatomic, weak, readwrite) IBOutlet UIBarButtonItem *animateButton;
 
 @end
 
@@ -33,24 +32,13 @@ static void * kBezierPathChangedContextKey = &kBezierPathChangedContextKey;
     // This is the layer that will animate along the path when the user presses the "animateButton".
     _layer = [CALayer layer];
     [_layer setContentsScale:[[UIScreen mainScreen] scale]];
-    [_layer setContents:(__bridge id)[UIImage imageNamed:@"american-flag.png"].CGImage];
+    [_layer setContents:(__bridge id)[[UIImage imageNamed:@"american-flag.png"] CGImage]];
     [_layer setBounds:CGRectMake(0.0, 0.0, 60.0, 60.0)];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-
-- (void)viewDidUnload {
-    animateButton = nil;
-
-    [super viewDidUnload];
 }
 
 - (IBAction)toggleAnimation:(id)sender {
     
-    if (animating) { // currently animation... so stop.
+    if (_animating) { // currently animation... so stop.
         
         [CATransaction setCompletionBlock:^{
             [_layer removeAllAnimations];
@@ -58,8 +46,8 @@ static void * kBezierPathChangedContextKey = &kBezierPathChangedContextKey;
         }];
         [_layer setOpacity:0.0];
         
-        [animateButton setTitle:@"Animate"];
-        animating = NO;
+        [_animateButton setTitle:@"Animate"];
+        _animating = NO;
         
     } else {  // not animating... so start
         
@@ -68,8 +56,8 @@ static void * kBezierPathChangedContextKey = &kBezierPathChangedContextKey;
         
         BTSCubicBezierPathView *pathView = (BTSCubicBezierPathView *)[self view];
         [self updateAnimationForPath:[pathView bezierPath]];
-        [animateButton setTitle:@"Stop"];
-        animating = YES;
+        [_animateButton setTitle:@"Stop"];
+        _animating = YES;
     }
 }
 

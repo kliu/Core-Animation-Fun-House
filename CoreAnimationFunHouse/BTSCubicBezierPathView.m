@@ -50,7 +50,7 @@ CGPathRef BTSPathCreateForCurrentControlPointPositions(CALayer *beginPointLayer,
 
 @implementation BTSCubicBezierPathView
 
-static NSString *kBTSCubicBezierPathLocationOffset = @"BTSCubicBezierPathLocationOffset";
+static NSString * kBTSCubicBezierPathLocationOffset = @"BTSCubicBezierPathLocationOffset";
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
@@ -190,8 +190,8 @@ static NSString *kBTSCubicBezierPathLocationOffset = @"BTSCubicBezierPathLocatio
     _shapeLayer = [CAShapeLayer layer];
     [_shapeLayer setPath:path];
     [_shapeLayer setFillRule:kCAFillRuleEvenOdd];
-    [_shapeLayer setFillColor:[UIColor clearColor].CGColor];
-    [_shapeLayer setStrokeColor:[UIColor blackColor].CGColor];
+    [_shapeLayer setFillColor:[[UIColor clearColor] CGColor]];
+    [_shapeLayer setStrokeColor:[[UIColor blackColor] CGColor]];
     [_shapeLayer setLineWidth:2.0];
     
     CFRelease(path);
@@ -235,7 +235,7 @@ CGPathRef BTSPathCreateForCurrentControlPointPositions(CALayer *beginPointLayer,
 {
     [super drawInContext:context];
     
-    CGContextSetFillColorWithColor(context, [[UIColor grayColor] colorWithAlphaComponent:0.5].CGColor);
+    CGContextSetFillColorWithColor(context, [[[UIColor grayColor] colorWithAlphaComponent:0.5] CGColor]);
     
     CGFloat centerX = CGRectGetMidX([self bounds]);
     CGFloat centerY = CGRectGetMidY([self bounds]);
@@ -244,7 +244,7 @@ CGPathRef BTSPathCreateForCurrentControlPointPositions(CALayer *beginPointLayer,
     CGContextAddArc(context, centerX, centerY, radius, 0.0, (CGFloat) (M_PI * 2.0), 0);
     CGContextFillPath(context);
     
-    CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
+    CGContextSetStrokeColorWithColor(context, [[UIColor blackColor] CGColor]);
     CGContextAddArc(context, centerX, centerY, radius, 0.0, (CGFloat) (M_PI * 2.0), 0);
     CGContextSetLineWidth(context, 2.0);
     CGContextStrokePath(context);
@@ -269,7 +269,7 @@ CGPathRef BTSPathCreateForCurrentControlPointPositions(CALayer *beginPointLayer,
 {
     [super drawInContext:context];
     
-    CGContextSetFillColorWithColor(context, [[UIColor blueColor] colorWithAlphaComponent:0.5].CGColor);
+    CGContextSetFillColorWithColor(context, [[[UIColor blueColor] colorWithAlphaComponent:0.5] CGColor]);
     
     CGFloat centerX = CGRectGetMidX([self bounds]);
     CGFloat centerY = CGRectGetMidY([self bounds]);
@@ -278,7 +278,7 @@ CGPathRef BTSPathCreateForCurrentControlPointPositions(CALayer *beginPointLayer,
     CGContextAddArc(context, centerX, centerY, radius, 0.0, (CGFloat) (M_PI * 2.0), 0);
     CGContextFillPath(context);
     
-    CGContextSetStrokeColorWithColor(context, [UIColor blackColor].CGColor);
+    CGContextSetStrokeColorWithColor(context, [[UIColor blackColor] CGColor]);
     CGContextAddArc(context, centerX, centerY, radius, 0.0, (CGFloat) (M_PI * 2.0), 0);
     CGContextSetLineWidth(context, 2.0);
     CGContextStrokePath(context);

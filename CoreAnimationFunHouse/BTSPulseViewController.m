@@ -21,13 +21,15 @@ static NSString * const kBTSPulseAnimation = @"BTSPulseAnimation";
     BOOL _autoreverses;
 }
 
-@property (strong, nonatomic) IBOutlet UILabel *animationDurationLabel;
+@property (nonatomic, weak, readwrite) IBOutlet UILabel *animationDurationLabel;
 
 @end
 
 @implementation BTSPulseViewController
 
 @synthesize animationDurationLabel = _animationDurationLabel;
+
+#pragma mark - View Life Cycle
 
 - (void)viewDidLoad
 {
@@ -38,7 +40,7 @@ static NSString * const kBTSPulseAnimation = @"BTSPulseAnimation";
     // Create a new layer and add it to the view's layer
     _layer = [CALayer layer];
     [_layer setContentsScale:[[UIScreen mainScreen] scale]];
-    [_layer setContents:(__bridge id)[UIImage imageNamed:@"american-flag.png"].CGImage];
+    [_layer setContents:(__bridge id)[[UIImage imageNamed:@"american-flag.png"] CGImage]];
     [_layer setBounds:CGRectMake(0.0, 0.0, 200.0, 200.0)];
     
     CGRect frame = [[self view] bounds];
@@ -58,6 +60,14 @@ static NSString * const kBTSPulseAnimation = @"BTSPulseAnimation";
     [super viewWillAppear:animated];
     [self beginAnimatingLayer];
 }
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self endAnimatingLayer];
+}
+
+#pragma mark - Explicit Animations
 
 - (void)beginAnimatingLayer
 {
@@ -92,11 +102,7 @@ static NSString * const kBTSPulseAnimation = @"BTSPulseAnimation";
     [_layer removeAnimationForKey:kBTSPulseAnimation];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [self endAnimatingLayer];
-}
+#pragma mark - User Interaction Methods
 
 - (IBAction)animationEnabledChanged:(id)sender {
     [self endAnimatingLayer];

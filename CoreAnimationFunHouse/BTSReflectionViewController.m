@@ -113,7 +113,7 @@
     // Next we create a layer that displays the American flag image.
     _imageLayer = [CALayer layer];
     [_imageLayer setContentsScale:[[UIScreen mainScreen] scale]];
-    [_imageLayer setContents:(__bridge id)image.CGImage];
+    [_imageLayer setContents:(__bridge id)[image CGImage]];
     [_imageLayer setBounds:CGRectMake(0.0, 0.0, [image size].width, [image size].height)];
     [_imageLayer setAnchorPoint:CGPointMake(0.0, 0.0)];
 
@@ -122,7 +122,7 @@
     // Finally overlay a gradient layer on top of the "reflection" layer. 
     CAGradientLayer *gradientLayer = [CAGradientLayer layer];
     [gradientLayer setContentsScale:[[UIScreen mainScreen] scale]];
-    [gradientLayer setColors:[NSArray arrayWithObjects:(__bridge id)[[UIColor whiteColor] colorWithAlphaComponent:0.25].CGColor, [UIColor whiteColor].CGColor, nil]];
+    [gradientLayer setColors:[NSArray arrayWithObjects:(__bridge id)[[[UIColor whiteColor] colorWithAlphaComponent:0.25] CGColor], [[UIColor whiteColor] CGColor], nil]];
     
     // Remember that the reflected layer is half the size, which is why the height of the gradient layer is cut in half.
     [gradientLayer setBounds:CGRectMake(0.0, 0.0, replicatorLayer.frame.size.width, [image size].height * 0.5 + 1.0)];
@@ -130,8 +130,10 @@
     [gradientLayer setPosition:CGPointMake([self view].frame.size.width / 2, [image size].height + 10.0)];
     [gradientLayer setZPosition:1]; // make sure the gradient is placed on top of the reflection.
 
-    [[[self view] layer] addSublayer:replicatorLayer];
-    [[[self view] layer] addSublayer:gradientLayer];
+    UIView *view = [self view];
+    
+    [[view layer] addSublayer:replicatorLayer];
+    [[view layer] addSublayer:gradientLayer];
     
     // One final (and fun step): 
     //   Create a text layer that is a sublayer of the image layer.
@@ -139,36 +141,36 @@
     CATextLayer *textLayer = [CATextLayer layer];
     [textLayer setContentsScale:[[UIScreen mainScreen] scale]];
     [textLayer setString:@"U.S.A."];
-    [textLayer setFontSize:38];
+    [textLayer setFontSize:38.0];
     [textLayer setAlignmentMode:kCAAlignmentCenter];
-    [textLayer setShadowColor:[UIColor blackColor].CGColor];
+    [textLayer setShadowColor:[[UIColor blackColor] CGColor]];
     [textLayer setShadowOpacity:1.0];
     [textLayer setShadowOffset:CGSizeMake(-4.0, -4.0)];
-    [textLayer setBounds:CGRectMake(0.0, 0.0, [_imageLayer frame].size.width, 30.0)];
+    [textLayer setBounds:CGRectMake(0.0, 0.0, [_imageLayer frame].size.width, 38.0)];
     [textLayer setPosition:CGPointMake([_imageLayer frame].size.width / 2.0, [_imageLayer frame].size.height - 25.0)];
     [textLayer setAnchorPoint:CGPointMake(0.5, 0.5)];
     [_imageLayer addSublayer:textLayer];
     
     // When the user taps, start animating the image's text layer up and down.
-    [[self view] setUserInteractionEnabled:YES];
-    [[self view] setMultipleTouchEnabled:YES];
-    [[self view] addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(animateTextLayer:)]];
+    [view setUserInteractionEnabled:YES];
+    [view setMultipleTouchEnabled:YES];
+    [view addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(animateTextLayer:)]];
 }
 
 - (void)animateTextLayer:(UIGestureRecognizer *)recognizer
 {   
     CALayer *textLayer = (CALayer *)[[_imageLayer sublayers] objectAtIndex:0];
     
-    CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@"position.y"];
+    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"position.y"];
     
     CGFloat halfBoxHeight = [textLayer frame].size.height / 2.0;
-    [anim setFromValue:[NSNumber numberWithFloat:[textLayer frame].origin.y + halfBoxHeight]];
-    [anim setToValue:[NSNumber numberWithFloat:halfBoxHeight]];
-    [anim setDuration:3.0];
-    [anim setRepeatCount:MAXFLOAT];
-    [anim setAutoreverses:YES];
+    [animation setFromValue:[NSNumber numberWithFloat:[textLayer frame].origin.y + halfBoxHeight]];
+    [animation setToValue:[NSNumber numberWithFloat:halfBoxHeight]];
+    [animation setDuration:3.0];
+    [animation setRepeatCount:MAXFLOAT];
+    [animation setAutoreverses:YES];
     
-    [textLayer addAnimation:anim forKey:nil];
+    [textLayer addAnimation:animation forKey:nil];
 
 }
 

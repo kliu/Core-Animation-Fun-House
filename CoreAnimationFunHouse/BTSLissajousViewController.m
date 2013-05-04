@@ -10,16 +10,15 @@
 
 #import "BTSLissajousLayer.h"
 
-@interface BTSLissajousViewController() {
-    
-    __weak IBOutlet UISlider *_amplitudeSlider;
-    __weak IBOutlet UIStepper *_aStepper;
-    __weak IBOutlet UIStepper *_bStepper;
-    __weak IBOutlet UISlider *_deltaSlider;
-    __weak IBOutlet UILabel *_deltaLabel;
-    __weak IBOutlet UILabel *_aValueLabel;
-    __weak IBOutlet UILabel *_bValueLabel;
-}
+@interface BTSLissajousViewController() 
+
+@property (nonatomic, weak, readwrite) IBOutlet UISlider *amplitudeSlider;
+@property (nonatomic, weak, readwrite) IBOutlet UIStepper *aStepper;
+@property (nonatomic, weak, readwrite) IBOutlet UIStepper *bStepper;
+@property (nonatomic, weak, readwrite) IBOutlet UISlider *deltaSlider;
+@property (nonatomic, weak, readwrite) IBOutlet UILabel *deltaLabel;
+@property (nonatomic, weak, readwrite) IBOutlet UILabel *aValueLabel;
+@property (nonatomic, weak, readwrite) IBOutlet UILabel *bValueLabel;
 
 @end
 
@@ -54,26 +53,6 @@
     [self updateDelta:_deltaSlider];
     
     [layer setNeedsDisplay];
-}
-
-- (void)viewDidUnload
-{
-    _amplitudeSlider = nil;
-    
-    _aStepper = nil;
-    _bStepper = nil;
-    _deltaSlider = nil;
-    
-    _aValueLabel = nil;
-    _bValueLabel = nil;
-    
-    _deltaLabel = nil;
-    [super viewDidUnload];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 - (IBAction)updateAmplitude:(id)sender {

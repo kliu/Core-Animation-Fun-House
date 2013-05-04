@@ -10,7 +10,6 @@
 
 @interface CALayer (WiggleAnimationAdditions)
 
-
 - (void)bts_startWiggling;
 - (void)bts_stopWiggling;
 

@@ -14,25 +14,18 @@
 
 @interface BTSBasicLayerPropertiesViewController() {
     CALayer *_layer;
-    
     CGFloat _animationDuration;
-    IBOutlet UISlider *_animationDurationSlider;
-    IBOutlet UISwitch *_enableAnimations;
 }
 
-@property (strong, nonatomic) IBOutlet UILabel *animationDurationLabel;
+@property (nonatomic, weak, readwrite) IBOutlet UILabel *animationDurationLabel;
+@property (nonatomic, weak, readwrite) IBOutlet UISlider *animationDurationSlider;
+@property (nonatomic, weak, readwrite) IBOutlet UISwitch *enableAnimations;
 
 @end
 
 @implementation BTSBasicLayerPropertiesViewController
-@synthesize animationDurationLabel;
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-}
-
-#pragma mark - View lifecycle
+#pragma mark - View Life Cycle
 
 - (void)viewDidLoad
 {
@@ -48,7 +41,7 @@
     // This example uses a single CALayer positioned new the top of the view.
     _layer = [CALayer layer];
     [_layer setContentsScale:[[UIScreen mainScreen] scale]];
-    [_layer setBackgroundColor:[UIColor blueColor].CGColor];
+    [_layer setBackgroundColor:[[UIColor blueColor] CGColor] ];
     [_layer setBounds:CGRectMake(0.0, 0.0, 200.0, 200.0)];
     
     CGPoint anchorPoint = {0.5, 0.0};
@@ -74,24 +67,12 @@
     [[[self view] layer] addSublayer:_layer];
 }
 
-- (void)viewDidUnload
-{
-    [self setAnimationDurationLabel:nil];
-    _enableAnimations = nil;
-    _animationDurationSlider = nil;
-    
-    [super viewDidUnload];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
+#pragma mark - User Interaction Methods
 
 - (IBAction)animationDurationChanged:(id)sender {
     
     _animationDuration = [(UISlider *)sender value];
-    [animationDurationLabel setText:[NSString stringWithFormat:@"Animation (%1.1f)", _animationDuration]];
+    [_animationDurationLabel setText:[NSString stringWithFormat:@"Animation (%1.1f)", _animationDuration]];
 }
 
 - (IBAction)toggleRoundCorners:(id)sender {
@@ -106,7 +87,7 @@
     [CATransaction setDisableActions:![_enableAnimations isOn]];
     [CATransaction setAnimationDuration:_animationDuration];
     
-    [_layer setBackgroundColor:([_layer backgroundColor] == [UIColor blueColor].CGColor ? [UIColor greenColor].CGColor : [UIColor blueColor].CGColor)]; 
+    [_layer setBackgroundColor:([_layer backgroundColor] == [[UIColor blueColor] CGColor] ? [[UIColor greenColor] CGColor] : [[UIColor blueColor] CGColor])]; 
 }
 
 - (IBAction)toggleBorder:(id)sender {

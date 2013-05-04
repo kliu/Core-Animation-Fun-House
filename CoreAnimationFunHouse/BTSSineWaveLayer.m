@@ -16,6 +16,7 @@ static NSString * const kBTSSineWaveLayerPhase = @"phase";
     CADisplayLink *_displayLink;
     NSMutableArray *_currentAnimations;
 }
+
 @end
 
 @implementation BTSSineWaveLayer
@@ -64,7 +65,7 @@ static NSString * const kBTSSineWaveLayerPhase = @"phase";
     
     BTSDrawCoordinateAxes(context);
     
-    CGContextSetStrokeColorWithColor(context, [UIColor blueColor].CGColor);
+    CGContextSetStrokeColorWithColor(context, [[UIColor blueColor] CGColor]);
     CGContextSetLineWidth(context, 2.0);
     CGContextSetShadow(context, CGSizeMake(5.0, 2.5), 5.0);
     
@@ -74,8 +75,8 @@ static NSString * const kBTSSineWaveLayerPhase = @"phase";
     CGFloat frequency = [[(NSValue *)[self presentationLayer] valueForKey:kBTSSineWaveLayerFrequency] floatValue];
     CGFloat phase = [[(NSValue *)[self presentationLayer] valueForKey:kBTSSineWaveLayerPhase] floatValue];
     
-    unsigned int stepCount = (unsigned int) CGRectGetWidth(bounds);
-    for (int t = 0; t <= stepCount; t++) {
+    unsigned int stepCount = (unsigned int)CGRectGetWidth(bounds);
+    for (unsigned int t = 0; t <= stepCount; t++) {
         CGFloat y = (CGFloat) (amplitude * sin(t * frequency + phase));
         
         if (t == 0) {

@@ -8,10 +8,10 @@
 
 #import "BTSLissajousLayer.h"
 
-static NSString* const kBTSLissajouseLayerAmplitude = @"amplitude";
-static NSString* const kBTSLissajouseLayerA = @"a";
-static NSString* const kBTSLissajouseLayerB = @"b";
-static NSString* const kBTSLissajouseLayerDelta = @"delta";
+static NSString * const kBTSLissajouseLayerAmplitude = @"amplitude";
+static NSString * const kBTSLissajouseLayerA = @"a";
+static NSString * const kBTSLissajouseLayerB = @"b";
+static NSString * const kBTSLissajouseLayerDelta = @"delta";
 
 static const CGFloat TWO_PI = (CGFloat) (M_PI * 2.0f);
 
@@ -61,7 +61,7 @@ static const CGFloat TWO_PI = (CGFloat) (M_PI * 2.0f);
     CGContextTranslateCTM(context, CGRectGetWidth(bounds) / 2, CGRectGetHeight(bounds) / 2.0);    
     
     BTSDrawCoordinateAxes(context);
-    CGContextSetStrokeColorWithColor(context, [UIColor blueColor].CGColor);
+    CGContextSetStrokeColorWithColor(context, [[UIColor blueColor] CGColor]);
     CGContextSetLineWidth(context, 2.0);
     CGContextSetShadow(context, CGSizeMake(0.0, 2.5), 5.0);
     
@@ -76,8 +76,10 @@ static const CGFloat TWO_PI = (CGFloat) (M_PI * 2.0f);
     CGMutablePathRef path = CGPathCreateMutable();
     
     BOOL shouldMoveToPoint = YES;
+    BOOL keepGoing = YES;
+    CGFloat t = 0.0;
     
-    for (CGFloat t = 0.0; t < TWO_PI + increment; t = t + increment) {
+    while (keepGoing) {
         CGFloat x = amplitude * sin(a * t + delta);
         CGFloat y = amplitude * sin(b * t);
         if (shouldMoveToPoint) {
@@ -86,6 +88,9 @@ static const CGFloat TWO_PI = (CGFloat) (M_PI * 2.0f);
         } else {
             CGPathAddLineToPoint(path, NULL, x, y);
         }
+        
+        t += increment;
+        keepGoing = t < TWO_PI + increment;
     }
     
     CGContextAddPath(context, path);

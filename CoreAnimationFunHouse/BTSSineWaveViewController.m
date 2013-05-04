@@ -9,12 +9,11 @@
 #import "BTSSineWaveViewController.h"
 #import "BTSSineWaveLayer.h"
 
-@interface BTSSineWaveViewController() {
-    
-    __weak IBOutlet UISlider *_amplitudeSlider;
-    __weak IBOutlet UISlider *_frequencySlider;
-    __weak IBOutlet UISlider *_phaseSlider;
-}
+@interface BTSSineWaveViewController() 
+
+@property (nonatomic, weak, readwrite) IBOutlet UISlider *amplitudeSlider;
+@property (nonatomic, weak, readwrite) IBOutlet UISlider *frequencySlider;
+@property (nonatomic, weak, readwrite) IBOutlet UISlider *phaseSlider;
 
 @end
 
@@ -51,19 +50,6 @@
     [layer setPhase:[_phaseSlider value]];
     
     [layer setNeedsDisplay];
-}
-
-- (void)viewDidUnload
-{
-    _amplitudeSlider = nil;
-    _frequencySlider = nil;
-    _phaseSlider = nil;
-    [super viewDidUnload];
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return UIInterfaceOrientationIsPortrait(interfaceOrientation);
 }
 
 - (IBAction)updateAmplitude:(id)sender {
